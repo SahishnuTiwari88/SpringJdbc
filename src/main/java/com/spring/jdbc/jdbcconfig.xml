@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:context="http://www.springframework.org/schema/context"
+ xmlns:p="http://www.springframework.org/schema/p"       
+ xsi:schemaLocation="http://www.springframework.org/schema/beans
+ https://www.springframework.org/schema/beans/spring-beans.xsd
+ http://www.springframework.org/schema/context
+ https://www.springframework.org/schema/context/spring-context.xsd">
+ 
+ <context:annotation-config/>
+ <!-- implementation class of data source(interface) is DriverManagerDataSource,and DriverManagerDataSource it has four properties
+ driverClassName,url,username,password  -->
+ 
+ <bean name = "ds" class = "org.springframework.jdbc.datasource.DriverManagerDataSource">
+ <property name="driverClassName" value = "com.mysql.cj.jdbc.Driver"/>
+ 
+ <property name="url" value = "jdbc:mysql://localhost:3306/springjdbc"/>
+ <property name="username" value = "root"/>
+ <property name="password" value="Sarvesh143"/>
+ </bean>
+ 
+ <bean name = "jdbctemplate" class = "org.springframework.jdbc.core.JdbcTemplate">
+ <property name="dataSource">
+ <!-- class of jdbc template is mention above and reference(object) of driver manager is given to jdbc template class so that its object
+ can be created and we can perform operation on database -->
+<!--  property of jdbctemplate is datasource that we have set in property name -->
+ <ref bean="ds"/>
+ </property>
+ </bean>
+ 
+ <bean name = "studentDao" class = "com.spring.jdbc.dao.StudentDaoImpl">
+ <property name = "jdbcTemplate" ref="jdbctemplate"/>
+ </bean>
+ 
+ </beans>
+ 
+ <!-- command + shift + T to open and search any class -->
